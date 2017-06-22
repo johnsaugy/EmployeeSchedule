@@ -64,7 +64,7 @@
 				<input type="text" class="form-control" id="name" placeholder="Input field">
 				<label for="">Role</label>
 				<input type="text" class="form-control" id="role" placeholder="Input field">
-				<label for="">Start Date</label>
+				<label for="">Start Date MM/DD/YYYY</label>
 				<input type="text" class="form-control" id="startDate" placeholder="Input field">
 				<label for="">Monthly Rate</label>
 				<input type="text" class="form-control" id="monthlyRate" placeholder="Input field">
@@ -78,6 +78,7 @@
 </div>
 <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
  <script src="https://code.jquery.com/jquery.js"></script>
+ <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
    <!-- Script -->
   <script>
     // Initialize Firebase
@@ -126,16 +127,20 @@
       console.log(db.role);
       console.log(db.start);
       console.log(db.rate);
-      console.log(Date(db.dateAdded));
+      console.log(moment(Date(db.dateAdded)).format("MM/DD/YYYY"));
+      console.log(moment().diff(moment(db.start), "months"));
+   
+
+      var monthsWorked = moment().diff(moment(db.start), "months");
 
       $("#table").prepend(`
 	      <tr>
 	        <td class="tName">${[db.name]}</td>
 	        <td class="tRole">${[db.role]}</td>
 	        <td class="tStart">${[db.start]}</td>
-	        <td class="tMonthsWorked">Months Worked</td>
+	        <td class="tMonthsWorked">${[monthsWorked]}</td>
 	        <td class="tMonthsRate">$ ${[db.rate]}</td>
-	        <td class="tBilled">Total Billed ($)</td>
+	        <td class="tBilled">($) ${[monthsWorked * db.rate]}</td>
 	      </tr>
       	`)
 

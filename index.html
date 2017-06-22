@@ -38,14 +38,14 @@
 
     <tbody id="table">
 
-      <tr>
-        <td class="tName">Employee Name</td>
-        <td class="tRole">Role</td>
-        <td class="tStart">Start Date</td>
-        <td class="tMonthsWorked">Months Worked</td>
-        <td class="tMonthsRate">Monthly Rate ($)</td>
-        <td class="tBilled">Total Billed ($)</td>
-      </tr>
+<!--       <tr>
+        <td class="tName"></td>
+        <td class="tRole"></td>
+        <td class="tStart"></td>
+        <td class="tMonthsWorked"></td>
+        <td class="tMonthsRate"></td>
+        <td class="tBilled"></td>
+      </tr> -->
 
     </tbody>
 
@@ -115,6 +115,11 @@
         rate: rate,
         dateAdded: firebase.database.ServerValue.TIMESTAMP
       });
+
+    $("#name").val("");
+  	$("#role").val("");
+  	$("#startDate").val("");
+  	$("#monthlyRate").val("");
 
 
   })

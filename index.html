@@ -36,15 +36,15 @@
   
     </thead>
 
-    <tbody>
+    <tbody id="table">
 
       <tr>
-        <td>Employee Name</td>
-        <td>Role</td>
-        <td>Start Date</td>
-        <td>Months Worked</td>
-        <td>Monthly Rate ($)</td>
-        <td>Total Billed ($)</td>
+        <td class="tName">Employee Name</td>
+        <td class="tRole">Role</td>
+        <td class="tStart">Start Date</td>
+        <td class="tMonthsWorked">Months Worked</td>
+        <td class="tMonthsRate">Monthly Rate ($)</td>
+        <td class="tBilled">Total Billed ($)</td>
       </tr>
 
     </tbody>
@@ -76,7 +76,72 @@
 
 
 </div>
+<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+ <script src="https://code.jquery.com/jquery.js"></script>
+   <!-- Script -->
+  <script>
+    // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDnElrjRXJ8U6S0AbCjKn74bFJTV293nyI",
+    authDomain: "firstproject-47bee.firebaseapp.com",
+    databaseURL: "https://firstproject-47bee.firebaseio.com",
+    projectId: "firstproject-47bee",
+    storageBucket: "firstproject-47bee.appspot.com",
+    messagingSenderId: "606160814972"
+  };
+  firebase.initializeApp(config);
 
-	
+  var database = firebase.database();
+
+  var name = "";
+  var role = "";
+  var start = "";
+  var monthsWorked = "";
+  var rate ="";
+  var dateAdded = "";
+
+  $("#addEmployee").on("click", function(){
+  	name = $("#name").val();
+  	role = $("#role").val();
+  	start = $("#startDate").val();
+  	rate = $("#monthlyRate").val();
+
+  	  // Code for handling the push
+     database.ref().push({
+        name: name,
+        role: role,
+        start: start,
+        rate: rate,
+        dateAdded: firebase.database.ServerValue.TIMESTAMP
+      });
+
+
+  })
+
+     database.ref().on("child_added", function(snapshot){
+
+      var db = snapshot.val();
+
+      console.log(db.name);
+      console.log(db.role);
+      console.log(db.start);
+      console.log(db.rate);
+      console.log(Date(db.dateAdded));
+
+      $("#table").prepend(`
+	      <tr>
+	        <td class="tName">${[db.name]}</td>
+	        <td class="tRole">${[db.role]}</td>
+	        <td class="tStart">${[db.start]}</td>
+	        <td class="tMonthsWorked">Months Worked</td>
+	        <td class="tMonthsRate">$ ${[db.rate]}</td>
+	        <td class="tBilled">Total Billed ($)</td>
+	      </tr>
+      	`)
+
+
+    })
+
+  </script>
 </body>
 </html>
